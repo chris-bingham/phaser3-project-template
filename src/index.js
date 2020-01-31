@@ -4,6 +4,7 @@ import spritesheet from "./assets/spritesheet.png";
 import sprites from "./assets/sprites.json";
 import { createAnim } from "./animationHelpers";
 import { Platforms } from "./platforms";
+import { Clouds } from "./clouds";
 
 const config = {
   type: Phaser.AUTO,
@@ -36,6 +37,7 @@ function create() {
   this.add.image(400, 150, "bg");
 
   this.platforms = new Platforms(this.physics.world, this);
+  this.clouds = new Clouds(this);
 
   createAnim(this.anims, "walk", "Walk (", ")", 10);
   createAnim(this.anims, "idle", "Idle (", ")", 10);
