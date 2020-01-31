@@ -3,6 +3,7 @@ import bgImg from "./assets/bg.png";
 import spritesheet from "./assets/spritesheet.png";
 import sprites from "./assets/sprites.json";
 import { createAnim } from "./animationHelpers";
+import { Platforms } from "./platforms";
 
 const config = {
   type: Phaser.AUTO,
@@ -34,14 +35,7 @@ function preload() {
 function create() {
   this.add.image(400, 150, "bg");
 
-  this.platform = this.add.tileSprite(
-    400,
-    500,
-    600,
-    100,
-    "allImages",
-    "tile-2"
-  );
+  this.platforms = new Platforms(this.physics.world, this);
 
   createAnim(this.anims, "walk", "Walk (", ")", 10);
   createAnim(this.anims, "idle", "Idle (", ")", 10);
@@ -51,10 +45,8 @@ function create() {
   this.cat.setOrigin(0.5);
   this.cat.play("idle");
 
-  this.physics.world.enable([this.cat, this.platform]);
+  this.physics.world.enable([this.cat]);
   this.cat.body.setBounce(0.2);
-
-  this.platform.body.setImmovable().setAllowGravity(false);
 
   this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -71,7 +63,7 @@ function create() {
 
   this.airbourne = false;
   this.walking = false;
-  this.physics.add.collider(this.cat, this.platform);
+  this.physics.add.collider(this.cat, this.platforms);
 }
 
 function update() {
